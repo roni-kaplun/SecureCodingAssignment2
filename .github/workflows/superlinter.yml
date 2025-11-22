@@ -14,15 +14,12 @@ jobs:
     permissions:
       contents: read
       packages: read
-      # To report GitHub Actions status checks
       statuses: write
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
         with:
-          # super-linter needs the full git history to get the
-          # list of files that changed across commits
           fetch-depth: 0
           persist-credentials: false
 
@@ -32,8 +29,10 @@ jobs:
       - name: Run Bandit
         run: bandit -r . -lll -iii || true
 
+      - name: Auto-format Python with Black
+        run: pip install black && black .
+
       - name: Super-linter
         uses: super-linter/super-linter@v5
         env:
-          # To report GitHub Actions status checks
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
