@@ -1,4 +1,3 @@
----
 name: Lint
 
 on: # yamllint disable-line rule:truthy
@@ -26,6 +25,14 @@ jobs:
           # list of files that changed across commits
           fetch-depth: 0
           persist-credentials: false
+
+      - name: Run Bandit Security Scanner
+        uses: shundor/bandit-action@v1
+        with:
+          path: "."
+          level: high
+          confidence: high
+          exit_zero: true
 
       - name: Super-linter
         uses: super-linter/super-linter@v5
