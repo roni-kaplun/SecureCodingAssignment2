@@ -26,7 +26,10 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Run Bandit Security Scanner
+      - name: Install Bandit
+        run: pip install bandit
+
+      - name: Run Bandit
         uses: shundor/bandit-action@v1
         with:
           path: "."
